@@ -19,8 +19,8 @@ public class Student {
     @Column(name = "uid", unique = true)
     private String adharCard;
 
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
-    Card card;
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)  // Bidirectional mapping with Card Entity.
+    private Card card;
 
     public Student() {
 

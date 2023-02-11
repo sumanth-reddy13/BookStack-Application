@@ -20,6 +20,11 @@ public class StudentController {
 
     @DeleteMapping("/delete/{student}")
     public String deleteStudent(@PathVariable("student") Student student) {
-        return studentService.delete(student);
+        return "";
+    }
+
+    @PutMapping("/issueBook")
+    public String issueBook(@RequestParam("bName") String bookName, @RequestParam("st_id") int student_id) {
+        return studentService.getBook(bookName, student_id);
     }
 }

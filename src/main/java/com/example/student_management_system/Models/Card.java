@@ -5,7 +5,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "card")
@@ -23,10 +25,13 @@ public class Card {
 
     @OneToOne
     @JoinColumn
-    Student student;
+    Student student;     // unidirectional mapping with the Student Entity.
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    List<Book> booksIssued;
 
     public Card() {
-
+        booksIssued = new ArrayList<>();
     }
 
     public Card(int id, Date createdOn, Date updatedOn, CardStatus cardStatus, Student student) {
@@ -75,5 +80,13 @@ public class Card {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public void setBooksIssued(List<Book> booksIssued) {
+        this.booksIssued = booksIssued;
+    }
+
+    public List<Book> getBooksIssued() {
+        return this.booksIssued;
     }
 }
