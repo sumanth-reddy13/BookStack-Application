@@ -6,6 +6,8 @@ import com.example.student_management_system.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -24,6 +26,10 @@ public class StudentController {
         return studentService.updateMobileNo(studentUpdateMobRequestDto);
     }
 
+    @GetMapping("/getStudentByEmail/{email}")
+    public Student getStudent(@PathVariable("email") String email) {
+        return studentService.findStudent(email);
+    }
 
     @PutMapping("/issueBook")
     public String issueBook(@RequestParam("bName") String bookName, @RequestParam("st_id") int student_id) {

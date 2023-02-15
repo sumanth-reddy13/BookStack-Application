@@ -49,6 +49,9 @@ public class StudentService {
 //        return "student deleted";
 //    }
 
+    public Student findStudent(String email) {
+        return studentRepository.findByEmail(email);
+    }
     public String getBook(String bookName, int student_id) {
         Student student = studentRepository.findById(student_id).get();
         Card card = student.getCard();
