@@ -1,5 +1,6 @@
 package com.example.student_management_system.Services;
 
+import com.example.student_management_system.Dto.StudentUpdateMobRequestDto;
 import com.example.student_management_system.Enums.CardStatus;
 import com.example.student_management_system.Models.Book;
 import com.example.student_management_system.Models.Card;
@@ -32,11 +33,21 @@ public class StudentService {
         return "student created successfully";
     }
 
-    public String delete(Student student) {
 
-//        studentRepository.
-        return "student deleted";
+    public String updateMobileNo(StudentUpdateMobRequestDto studentUpdateMobRequestDto) {
+
+        Student student = studentRepository.findById(studentUpdateMobRequestDto.getId()).get();
+        student.setMobile(studentUpdateMobRequestDto.getMobileNumber());
+
+        studentRepository.save(student);
+        return "Mobile Number updated successfully";
+
     }
+//    public String delete(Student student) {
+//
+////        studentRepository.
+//        return "student deleted";
+//    }
 
     public String getBook(String bookName, int student_id) {
         Student student = studentRepository.findById(student_id).get();

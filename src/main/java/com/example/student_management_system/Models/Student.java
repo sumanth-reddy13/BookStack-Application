@@ -20,7 +20,7 @@ public class Student {
     private String adharCard;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)  // Bidirectional mapping with Card Entity.
-    private Card card;
+    private Card card;             // mappedBy = "student" object of parent class foreign Key.
 
     public Student() {
 

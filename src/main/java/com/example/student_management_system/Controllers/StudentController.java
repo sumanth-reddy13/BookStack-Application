@@ -1,5 +1,6 @@
 package com.example.student_management_system.Controllers;
 
+import com.example.student_management_system.Dto.StudentUpdateMobRequestDto;
 import com.example.student_management_system.Models.Student;
 import com.example.student_management_system.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,11 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
-    @DeleteMapping("/delete/{student}")
-    public String deleteStudent(@PathVariable("student") Student student) {
-        return "";
+    @PutMapping("/updateMobNo")
+    public String updateMobNo(@RequestBody StudentUpdateMobRequestDto studentUpdateMobRequestDto) {
+        return studentService.updateMobileNo(studentUpdateMobRequestDto);
     }
+
 
     @PutMapping("/issueBook")
     public String issueBook(@RequestParam("bName") String bookName, @RequestParam("st_id") int student_id) {

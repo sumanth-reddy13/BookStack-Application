@@ -1,5 +1,6 @@
 package com.example.student_management_system.Controllers;
 
+import com.example.student_management_system.Dto.BookRequestDto;
 import com.example.student_management_system.Models.Book;
 import com.example.student_management_system.Services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,8 @@ public class BookController {
     BookService bookService;
 
     @PostMapping("add")
-    public String addBook(@RequestBody Book book) {
-        return bookService.addBook(book);
+    public String addBook(@RequestBody BookRequestDto bookReq) {
 
-
+        return bookService.addBook(bookReq);
     }
 }

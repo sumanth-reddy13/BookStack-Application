@@ -3,6 +3,8 @@ package com.example.student_management_system.Models;
 import com.example.student_management_system.Enums.Genre;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -25,6 +27,9 @@ public class Book {
     @JoinColumn
     private Card card;        // unidirectional relation with Card.
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)  // bidirectional mapping with Transaction model.
+    List<Transaction> transactionsList = new ArrayList<>();
+
     public Book() {
 
     }
@@ -36,6 +41,14 @@ public class Book {
         this.card = card;
         this.genre = genre;
         this.issued = issued;
+    }
+
+    public List<Transaction> getTransactionsList() {
+        return transactionsList;
+    }
+
+    public void setTransactionsList(List<Transaction> transactionsList) {
+        this.transactionsList = transactionsList;
     }
 
     public int getId() {

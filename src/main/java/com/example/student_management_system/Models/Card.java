@@ -27,8 +27,11 @@ public class Card {
     @JoinColumn
     Student student;     // unidirectional mapping with the Student Entity.
 
-    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)  // bidirectional mapping with Book Model
     List<Book> booksIssued;
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    List<Transaction> transactionsList = new ArrayList<>();
 
     public Card() {
         booksIssued = new ArrayList<>();
@@ -40,6 +43,15 @@ public class Card {
         this.updatedOn = updatedOn;
         this.cardStatus = cardStatus;
         this.student = student;
+    }
+
+
+    public List<Transaction> getTransactionsList() {
+        return transactionsList;
+    }
+
+    public void setTransactionsList(List<Transaction> transactionsList) {
+        this.transactionsList = transactionsList;
     }
 
     public int getId() {
