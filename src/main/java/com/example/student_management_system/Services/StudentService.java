@@ -43,11 +43,11 @@ public class StudentService {
         return "Mobile Number updated successfully";
 
     }
-//    public String delete(Student student) {
-//
-////        studentRepository.
-//        return "student deleted";
-//    }
+    public String delete(int id) {
+
+        studentRepository.deleteById(id);
+        return "student deleted";
+    }
 
     public Student findStudent(String email) {
         return studentRepository.findByEmail(email);

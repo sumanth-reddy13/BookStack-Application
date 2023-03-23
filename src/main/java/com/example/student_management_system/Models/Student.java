@@ -16,8 +16,8 @@ public class Student {
     @Column(name = "student_email", unique = true)
     private String email;
     private String country;
-    @Column(name = "uid", unique = true)
-    private String adharCard;
+//    @Column(name = "uid", unique = true)
+//    private String adharCard;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)  // Bidirectional mapping with Card Entity.
     private Card card;             // mappedBy = "student" object of parent class foreign Key.
@@ -33,7 +33,7 @@ public class Student {
         this.email = email;
         this.country = country;
         this.card = card;
-        this.adharCard = adharCard;
+//        this.adharCard = adharCard;
     }
 
     public int getId() {
@@ -84,11 +84,11 @@ public class Student {
         this.card = card;
     }
 
-    public String getAdharCard() {
-        return adharCard;
-    }
-
-    public void setAdharCard(String adharCard) {
-        this.adharCard = adharCard;
-    }
+//    public String getAdharCard() {
+//        return adharCard;
+//    }
+//
+//    public void setAdharCard(String adharCard) {
+//        this.adharCard = adharCard;
+//    }
 }

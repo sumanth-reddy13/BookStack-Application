@@ -35,4 +35,9 @@ public class StudentController {
     public String issueBook(@RequestParam("bName") String bookName, @RequestParam("st_id") int student_id) {
         return studentService.getBook(bookName, student_id);
     }
+
+    @DeleteMapping("delete")
+    public String deleteStudent(@RequestParam("id") int id) {
+        return studentService.delete(id);
+    }
 }

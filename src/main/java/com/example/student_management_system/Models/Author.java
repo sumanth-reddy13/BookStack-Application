@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity                  // Hibernate maps the attributes to the columns in the database.
 @Table(name = "author")
 public class Author {
     @Id
@@ -16,12 +16,13 @@ public class Author {
     private double rating;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)     // bidirectional mapping with Book Entity.
-    List<Book> booksWritten;
+    List<Book> booksWritten = new ArrayList<>();
 
     public Author() {
-        booksWritten = new ArrayList<>();
+        // No Args Constructor
     }
 
+    // All args Constructor
     public Author(int id, String name, int age, String country, double rating, List<Book> booksWritten) {
         this.id = id;
         this.name = name;

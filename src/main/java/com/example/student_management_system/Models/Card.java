@@ -27,7 +27,7 @@ public class Card {
     @JoinColumn
     Student student;     // unidirectional mapping with the Student Entity.
 
-    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)  // bidirectional mapping with Book Model
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)  // bidirectional mapping with Book Model // card is the parent
     List<Book> booksIssued;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)

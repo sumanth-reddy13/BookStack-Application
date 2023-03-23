@@ -4,6 +4,7 @@ import com.example.student_management_system.Enums.TransactionStatus;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,7 +21,9 @@ public class Transaction {
     private int fine;
     private boolean isIssuedOperation;
     @CreationTimestamp
-    private Date transactionDate;
+    private LocalDate transactionDate;
+
+//    private LocalDate lastReturnDateWithoutFine = transactionDate.plusDays(15);
 
     @ManyToOne
     @JoinColumn
@@ -33,6 +36,14 @@ public class Transaction {
     public Transaction() {
 
     }
+
+//    public LocalDate getLastReturnDateWithoutFine() {
+//        return lastReturnDateWithoutFine;
+//    }
+//
+//    public void setLastReturnDateWithoutFine(LocalDate lastReturnDateWithoutFine) {
+//        this.lastReturnDateWithoutFine = lastReturnDateWithoutFine;
+//    }
 
     public int getId() {
         return id;
@@ -74,11 +85,11 @@ public class Transaction {
         isIssuedOperation = issuedOperation;
     }
 
-    public Date getTransactionDate() {
+    public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
     }
 

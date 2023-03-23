@@ -21,14 +21,14 @@ public class Book {
 
     @ManyToOne
     @JoinColumn
-    private Author author;    // unidirectional relation with Author Entity
+    private Author author;    // unidirectional relation with Author Entity   // book is the child entity
 
     @ManyToOne
     @JoinColumn
-    private Card card;        // unidirectional relation with Card.
+    private Card card;        // unidirectional relation with Card. // book is the child entity
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)  // bidirectional mapping with Transaction model.
-    List<Transaction> transactionsList = new ArrayList<>();
+    List<Transaction> transactionsList = new ArrayList<>();    // book is the parent entity.
 
     public Book() {
 
