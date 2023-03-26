@@ -25,7 +25,7 @@ public class StudentService {
 
         Card card = new Card();
         card.setCardStatus(CardStatus.ACTIVATED);
-        card.setStudent(student);
+        card.setStudent(student);        // setting the foreign key in card Entity.
 
         student.setCard(card);
 

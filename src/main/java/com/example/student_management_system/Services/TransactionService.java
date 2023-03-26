@@ -51,7 +51,7 @@ public class TransactionService {
 
         transaction.setTransactionStatus(TransactionStatus.PENDING);
         transaction.setFine(0);
-        transaction.setIssuedOperation(true);
+        transaction.setIssuedOperation(false);
         transaction.setBook(book);
         transaction.setCard(card);
 
@@ -69,6 +69,7 @@ public class TransactionService {
 
 
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        transaction.setIssuedOperation(true);
         card.getTransactionsList().add(transaction);   // adding transaction to card Entity
         card.getBooksIssued().add(book);               // adding the issued book to list of Books issued to the card
 
@@ -83,7 +84,7 @@ public class TransactionService {
     }
 
     public String getTransactions(int cardId, int bookId) {
-        List<Transaction> transactionList = transactionRepository.getTransactionForBookAndCard(cardId, bookId);
+        List<Transaction> transactionList = transactionRepository.getTransactionListForBookAndCard(cardId, bookId);
         String s = transactionList.get(0).getTransactionId();
         return s;
     }
@@ -92,11 +93,12 @@ public class TransactionService {
         Card card = cardRepository.findById(cardId).get();
         Book book = bookRepository.findById(bookId).get();
 
-        List<Transaction> transactionsListOfBookAndCard = transactionRepository.getTransactionListForBookAndCard(cardId, bookId);
-        if (transactionsListOfBookAndCard.get(transactionsListOfBookAndCard.size() - 1).isIssuedOperation() == false) {
+        Transaction lastTransaction = transactionRepository.getTransactionForBookAndCard(cardId, bookId);
+
+        if (lastTransaction == null) {
             return "book is already returned";
         }
-        Transaction lastTransaction = transactionsListOfBookAndCard.get(transactionsListOfBookAndCard.size() - 1);
+//        Transaction lastTransaction = transactionsListOfBookAndCard.get(transactionsListOfBookAndCard.size() - 1);
         if (!book.isIssued()) {
             return "book is not issued";
         }
@@ -106,18 +108,42 @@ public class TransactionService {
         returnTransaction.setIssuedOperation(false);
 
         LocalDate returnDate = LocalDate.now();
-        LocalDate lastReturnDateOfTheBookWithoutFine = returnTransaction.getTransactionDate().plusDays(15);
+        LocalDate lastReturnDateOfTheBookWithoutFine = lastTransaction.getTransactionDate().plusDays(15);
 
+        int days = 0;
         if (returnDate.equals(lastReturnDateOfTheBookWithoutFine) || returnDate.isBefore(lastReturnDateOfTheBookWithoutFine)) {
             returnTransaction.setFine(0);
         } else {
-            //  returnDate - lastReturnDateWithoutFine
-            long days = ChronoUnit.DAYS.between(lastReturnDateOfTheBookWithoutFine, returnDate);
-            int year = returnDate.getYear() - lastReturnDateOfTheBookWithoutFine.getYear();
-            int dayss = Math.abs(returnDate.getDayOfYear() - lastReturnDateOfTheBookWithoutFine.getDayOfYear());
-//            long diff = returnDate.getLong(lastReturnDateOfTheBookWithoutFine);
+            if (returnDate.getYear() == lastReturnDateOfTheBookWithoutFine.getYear()) {
+                days = returnDate.getDayOfYear() - lastReturnDateOfTheBookWithoutFine.getDayOfYear();
+            }
+            else {
+                days = (366 - returnDate.getDayOfYear()) + lastReturnDateOfTheBookWithoutFine.getDayOfYear();
+                if (returnDate.isLeapYear()) {
+                    days++;
+                }
+            }
         }
-        return "";
+        int finePerDay = 10;
+        returnTransaction.setFine(days * finePerDay);
+        returnTransaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        returnTransaction.setBook(book);
+        returnTransaction.setCard(card);
+
+        returnTransaction = transactionRepository.save(returnTransaction);
+
+        book.setCard(null);
+        book.setIssued(false);
+        book.getTransactionsList().add(returnTransaction);
+
+        List<Book> list = card.getBooksIssued();
+        list.remove(book);
+        card.setBooksIssued(list);
+        card.getTransactionsList().add(returnTransaction);
+
+        cardRepository.save(card);
+
+        return "return successful";
     }
 }
 

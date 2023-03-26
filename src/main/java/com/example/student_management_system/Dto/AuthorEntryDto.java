@@ -8,6 +8,8 @@ public class AuthorEntryDto {
     private String country;
     private double rating;
 
+    // Constructors, getters and setters below.
+
     public AuthorEntryDto() {
 
     }

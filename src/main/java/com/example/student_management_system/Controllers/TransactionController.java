@@ -28,7 +28,7 @@ public class TransactionController {
     }
 
     @PutMapping("/returnBook")
-    public String returnBook(int cardId, int bookId) {
+    public String returnBook(@RequestParam("cardId") int cardId, @RequestParam("bookId") int bookId) {
         try {
             return transactionService.returnBook(cardId, bookId);
         }

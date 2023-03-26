@@ -16,8 +16,6 @@ public class Student {
     @Column(name = "student_email", unique = true)
     private String email;
     private String country;
-//    @Column(name = "uid", unique = true)
-//    private String adharCard;
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)  // Bidirectional mapping with Card Entity.
     private Card card;             // mappedBy = "student" object of parent class foreign Key.
